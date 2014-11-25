@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">group9</property>
+        <property name="connection.password">g9db</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/sbs</property>
+        <property name="hibernate.jdbc.use_streams_for_binary">true</property>
+        <property name="hibernate.jdbc.batch_size">0</property>
+        <property name="hibernate.max_fetch_depth">3</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.generate_statistics">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        <mapping class="com.netbanking.database.userinfo"/>
+        <mapping class="com.netbanking.database.account"/>
+        <mapping class="com.netbanking.database.authsender"/>
+        <!-- <mapping class="com.netbanking.database.quwarehouse"/> -->
+        <!-- <mapping class="com.netbanking.database.secwarehouse"/> -->
+        <!-- <mapping class="com.netbanking.database.sitekeywarehouse"/> -->
+        <mapping class="com.netbanking.database.systemlog"/>
+        <mapping class="com.netbanking.database.trandetails"/>
+        <mapping class="com.netbanking.database.usersec"/>
+        <mapping class="com.netbanking.database.piidbrequest"/>
+        <mapping class="com.netbanking.database.paymentrequest"/>
+    </session-factory>
+</hibernate-configuration>

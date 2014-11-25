@@ -1,0 +1,128 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	      http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+	<display-name>United Bank Of Arizona</display-name>
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	
+	<listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    
+    <listener>
+   		<listener-class>
+   			org.springframework.security.web.session.HttpSessionEventPublisher
+   		</listener-class>
+ 	</listener>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+        	/WEB-INF/mvc-dispatcher-servlet.xml
+            /WEB-INF/spring-security.xml
+        </param-value>
+    </context-param>
+
+    <!-- Enables Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<filter>
+  		<filter-name>TimeOutFilter</filter-name>
+  		<filter-class>com.netbanking.util.SessionCheck</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>TimeOutFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+		<!-- <url-pattern>/accessPII.html</url-pattern>
+		<url-pattern>/addAuthorization.html</url-pattern>
+		<url-pattern>/createTrans.html</url-pattern>
+		<url-pattern>/debitcredit.html</url-pattern>
+		<url-pattern>/debitCreditSuccess.html</url-pattern>
+		<url-pattern>/deleteAccount.html</url-pattern>
+		<url-pattern>/editProfile.html</url-pattern>
+		<url-pattern>/externalHomePage.html</url-pattern>
+		<url-pattern>/forgotPassword.html</url-pattern>
+		<url-pattern>/forgotPasswordvisible2.html</url-pattern>
+		<url-pattern>/userAuthentication.html</url-pattern>
+		<url-pattern>/internalHomePage.html</url-pattern>
+		<url-pattern>/resetPassword.html</url-pattern>
+		<url-pattern>/result.html</url-pattern>
+		<url-pattern>/showlog.html</url-pattern>
+		<url-pattern>/signUpUser.html</url-pattern>
+		<url-pattern>/transfer.html</url-pattern>
+		<url-pattern>/viewAccount.html</url-pattern>
+		<url-pattern>/viewAccountResult.html</url-pattern>
+		<url-pattern>/viewProfile.html</url-pattern>
+		<url-pattern>/viewStmts.html</url-pattern>
+		<url-pattern>/viewTrans.html</url-pattern>
+		<url-pattern>/viewTransSuccess.html</url-pattern>
+		<url-pattern>/logout.html</url-pattern>
+		<url-pattern>/homePage.html</url-pattern>
+		 -->
+	</filter-mapping>
+</web-app>

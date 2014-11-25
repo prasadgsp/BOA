@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<!-- <http auto-config="true">
+         <intercept-url access="permitAll()" pattern="/homePage.html" />
+        <form-login login-page="/homePage.html" authentication-success-handler-ref="authenticationSuccessRedirecthandler"/>
+        access denied page
+               <access-denied-handler error-page="/403" />
+               enable csrf protection
+               <csrf/>
+       </http> -->
+       
+    <global-method-security pre-post-annotations="enabled" />
+	<http auto-config="false" use-expressions="true">
+	
+		<!-- <intercept-url pattern="/transfer" access="MERCHANT" /> -->
+		<form-login login-page="/homePage.html"
+			authentication-success-handler-ref="authenticationSuccessRedirecthandler"
+			authentication-failure-handler-ref="authenticationFailureRedirecthandler"
+			authentication-failure-url="/homePage?error" />
+		<logout logout-success-url="/logout"
+			invalidate-session="true" delete-cookies="JSESSIONID" />
+			<access-denied-handler error-page="/accessDenied"/>
+
+		<session-management invalid-session-url="/homePage.html"
+			session-authentication-error-url="/sessionTimeout.html"
+			session-fixation-protection="newSession">
+			<concurrency-control error-if-maximum-exceeded="true"
+				expired-url="/sessionTimeout.html" max-sessions="1" />
+		</session-management>
+
+	<headers>
+		<cache-control />
+		<content-type-options />
+		<hsts />
+		<frame-options />
+		<xss-protection />
+	</headers>	
+	</http>
+
+
+	<!-- Select users and user_roles from database -->
+	<authentication-manager>
+		<authentication-provider>
+			<password-encoder ref="encoder" />
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select userId, passwd ,enabled from usersec where userId=?"
+				authorities-by-username-query="select userId, userType from userinfo where userId =?  " />
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="10" />
+	</beans:bean>
+
+</beans:beans>
